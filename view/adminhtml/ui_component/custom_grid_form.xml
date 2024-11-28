@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">custom_grid_form.custom_grid_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Custom Grid Form</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <namespace>custom_grid_form</namespace>
+        <dataScope>data.general</dataScope>
+        <deps>
+            <dep>custom_grid_form.custom_grid_form_data_source</dep>
+        </deps>
+        <buttons>
+            <button name="save" class="Company\CustomGrid\Block\Form\CustomItem\Save"/>
+            <button name="back" class="Company\CustomGrid\Block\Form\CustomItem\Back"/>
+            <button name="delete" class="Company\CustomGrid\Block\Form\CustomItem\Delete"/>
+        </buttons>
+    </settings>
+    <dataSource name="custom_grid_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <submitUrl path="custom_grid/customitem/save"/>
+        </settings>
+        <dataProvider class="Company\CustomGrid\Ui\Form\DataProvider"
+                      name="custom_grid_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <label translate="true">General</label>
+        </settings>
+        <field name="id" sortOrder="0" formElement="hidden">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Entity ID</label>
+                <dataScope>id</dataScope>
+            </settings>
+        </field>
+        <field name="name" sortOrder="00" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">name</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Name</label>
+                <dataScope>name</dataScope>
+                <required>true</required>
+            </settings>
+        </field>
+        <field name="status" formElement="select">
+            <settings>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+                <dataScope>status</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Company\CustomGrid\Config\Source\Status"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>
