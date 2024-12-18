@@ -1,0 +1,18 @@
+{
+    "custom_items": {
+        "column": {
+            "id": true,
+            "name": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "CUSTOM_ITEMS_ID": true,
+            "CUSTOM_ITEMS_NAME": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

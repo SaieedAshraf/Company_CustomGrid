@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Company_CustomGrid"
+             sortOrder="100"
+             title="Custom grid"
+             module="Company_CustomGrid"
+             parent="Magento_Backend::content"
+             resource="Company_CustomGrid::management"
+             translate="title"/>
+        <add id="Company_CustomGrid::management"
+             sortOrder="100"
+             title="Manage custom items"
+             module="Company_CustomGrid"
+             parent="Company_CustomGrid"
+             resource="Company_CustomGrid::management"
+             translate="title"
+             action="custom_grid/customitem/index"/>
+    </menu>
+</config>

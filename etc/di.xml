@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Company\CustomGrid\Api\Data\CustomItemInterface"
+                type="Company\CustomGrid\Model\Data\CustomItemData"/>
+    <preference for="Company\CustomGrid\Api\CustomItemRepositoryInterface"
+                type="Company\CustomGrid\Model\CustomItemRepository"/>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="custom_grid_listing_data_source" xsi:type="string">CustomItemCollection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="CustomItemCollection" type="Company\CustomGrid\Ui\DataProvider\Listing\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">custom_items</argument>
+            <argument name="resourceModel" xsi:type="string">Company\CustomGrid\Model\ResourceModel\CustomItem</argument>
+        </arguments>
+    </virtualType>
+</config>

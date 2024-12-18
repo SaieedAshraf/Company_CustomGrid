@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">custom_grid_listing.custom_grid_listing_data_source</item>
+            <item name="deps" xsi:type="string">custom_grid_listing.custom_grid_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/create"/>
+                <class>primary</class>
+                <label translate="true">Add New</label>
+            </button>
+        </buttons>
+        <spinner>custom_grid_listing_columns</spinner>
+        <deps>
+            <dep>custom_grid_listing.custom_grid_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="custom_grid_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Company_CustomGrid::management</aclResource>
+        <dataProvider class="Company\CustomGrid\Ui\DataProvider\ListingDataProvider"
+                      name="custom_grid_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <filterSearch name="fulltext"/>
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">custom_grid_listing.custom_grid_listing.custom_grid_listing_columns.ids</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+            <action name="status">
+                <settings>
+                    <type>status</type>
+                    <label translate="true">Change status</label>
+                    <actions>
+                        <action name="0">
+                            <type>disable</type>
+                            <label translate="true">Disable</label>
+                            <url path="custom_grid/customitem/massStatus">
+                                <param name="status">0</param>
+                            </url>
+                        </action>
+                        <action name="1">
+                            <type>enable</type>
+                            <label translate="true">Enable</label>
+                            <url path="custom_grid/customitem/massStatus">
+                                <param name="status">1</param>
+                            </url>
+                        </action>
+                    </actions>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="custom_grid_listing_columns">
+        <settings>
+            <editorConfig>
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" xsi:type="url" path="custom_grid/customitem/inlineEdit"/>
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+                <param name="indexField" xsi:type="string">id</param>
+                <param name="enabled" xsi:type="boolean">true</param>
+                <param name="selectProvider" xsi:type="string">custom_grid_listing.custom_grid_listing.custom_grid_listing_columns.ids</param>
+            </editorConfig>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">custom_grid_listing.custom_grid_listing.custom_grid_listing_columns_editor</item>
+                    <item name="target" xsi:type="string">startEdit</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <selectionsColumn name="ids" sortOrder="0">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+                <editor>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <editorType>text</editorType>
+                </editor>
+            </settings>
+        </column>
+        <column name="status" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <filter>select</filter>
+                <label translate="true">Status</label>
+                <options class="Company\CustomGrid\Config\Source\Status"/>
+                <dataType>select</dataType>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
+            </settings>
+        </column>
+
+        <column name="created_at">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Created At</label>
+            </settings>
+        </column>
+        <column name="updated_at">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Updated At</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Company\CustomGrid\Ui\Component\Listing\Column\CustomGridBlockActions">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>
